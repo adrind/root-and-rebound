@@ -16,7 +16,6 @@ exports.createPages = ({ actions, graphql }) => {
               slug
             }
             frontmatter {
-              tags
               templateKey
             }
           }
@@ -68,7 +67,7 @@ exports.createPages = ({ actions, graphql }) => {
           tag,
         },
       })
-    })
+    }) 
   })
 }
 
@@ -78,6 +77,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
   if (node.internal.type === `MarkdownRemark`) {
     const value = createFilePath({ node, getNode })
+    console.log('vaaaaal', value)
     createNodeField({
       name: `slug`,
       node,

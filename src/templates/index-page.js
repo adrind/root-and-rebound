@@ -4,7 +4,6 @@ import { Link, graphql } from 'gatsby'
 
 import Layout from '../components/Layout'
 import Features from '../components/Features'
-import BlogRoll from '../components/BlogRoll'
 
 export const IndexPageTemplate = ({
   image,
@@ -14,6 +13,7 @@ export const IndexPageTemplate = ({
   mainpitch,
   description,
   intro,
+  html
 }) => (
   <div>
     <div
@@ -40,11 +40,12 @@ export const IndexPageTemplate = ({
           className="has-text-weight-bold is-size-3-mobile is-size-2-tablet is-size-1-widescreen"
           style={{
             boxShadow:
-              'rgb(255, 68, 0) 0.5rem 0px 0px, rgb(255, 68, 0) -0.5rem 0px 0px',
-            backgroundColor: 'rgb(255, 68, 0)',
-            color: 'white',
+              '#666666 0.5rem 0px 0px, #666666 -0.5rem 0px 0px',
+            backgroundColor: '#666666',
+            color: '#DDDDDD',
             lineHeight: '1',
             padding: '0.25em',
+            textAligin: 'center'
           }}
         >
           {title}
@@ -53,9 +54,9 @@ export const IndexPageTemplate = ({
           className="has-text-weight-bold is-size-5-mobile is-size-5-tablet is-size-4-widescreen"
           style={{
             boxShadow:
-              'rgb(255, 68, 0) 0.5rem 0px 0px, rgb(255, 68, 0) -0.5rem 0px 0px',
-            backgroundColor: 'rgb(255, 68, 0)',
-            color: 'white',
+              '#666666 0.5rem 0px 0px, #666666 -0.5rem 0px 0px',
+            backgroundColor: '#666666',
+            color: '#DDDDDD',
             lineHeight: '1',
             padding: '0.25em',
           }}
@@ -64,6 +65,7 @@ export const IndexPageTemplate = ({
         </h3>
       </div>
     </div>
+    <div dangerouslySetInnerHTML={{__html: html}}/>
     <section className="section section--gradient">
       <div className="container">
         <div className="section">
@@ -98,7 +100,6 @@ export const IndexPageTemplate = ({
                   <h3 className="has-text-weight-semibold is-size-2">
                     Latest stories
                   </h3>
-                  <BlogRoll />
                   <div className="column is-12 has-text-centered">
                     <Link className="btn" to="/blog">
                       Read more
@@ -127,7 +128,7 @@ IndexPageTemplate.propTypes = {
 }
 
 const IndexPage = ({ data }) => {
-  const { frontmatter } = data.markdownRemark
+  const { frontmatter, html } = data.markdownRemark
 
   return (
     <Layout>
@@ -139,6 +140,7 @@ const IndexPage = ({ data }) => {
         mainpitch={frontmatter.mainpitch}
         description={frontmatter.description}
         intro={frontmatter.intro}
+        html={html}
       />
     </Layout>
   )
@@ -157,6 +159,7 @@ export default IndexPage
 export const pageQuery = graphql`
   query IndexPageTemplate {
     markdownRemark(frontmatter: { templateKey: { eq: "index-page" } }) {
+      html
       frontmatter {
         title
         image {
